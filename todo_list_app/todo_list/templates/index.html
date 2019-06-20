@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>TodoApp - Create A Todo With Django</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div django-app="TaskManager">
+    <div class="container">
+            <div class="content">
+            <h1>TodoApp</h1>
+            <p class="tagline"> todo app</p>
+            <form action="" method="post">
+            {% csrf_token %} <!-- csrf token for basic security -->
+                <div class="inputContainer">
+                    <input type="text" id="title" class="taskName"  name="title" required>
+                    <label for="title">Title</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" id="description" class="taskName"  name="description" required>
+                    <label for="description">Description</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="datetime-local" id="todo_task_dates_times" class="taskDate" name="todo_task_dates_times">
+                    <label for="todo_task_dates_times">TODO Task Date & Time</label>
+                </div>
+                <div class="inputContainer half last">
+                    <i class="fa fa-caret-down selectArrow"></i>
+                    <select id="status" class="taskCategory" name="status">
+                    <option class="disabled" value="">Choose a category</option>
+                    <option class="" value="Inprogress" name="Inprogress">Inprogress</option>
+                    <option class="" value="Completed" name="Completed">Completed</option>
+                    <option class="" value="Pending" name="Pending">Pending</option>
+                    </select>
+                    <label for="status">status</label>
+                </div>
+                <div class="inputContainer half last right">
+                    <input type="date" id="created_at" class="taskDate" name="created_at">
+                    <label for="created_at">Create at</label>
+                </div>
+                <div class="inputContainer half last right">
+                    <input type="date" id="modified_at" class="taskDate" name="modified_at">
+                    <label for="modified_at">Modified at</label>
+                </div>
+                <div class="row">
+                    <button class="taskAdd" name="taskAdd" type="submit"><i class="fa fa-plus icon"></i>Add task</button>
+                    <button class="taskDelete" name="taskDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"><i class="fa fa-trash-o icon"></i>Delete Task</button>
+                </div>
+            <ul class="taskList">
+            {% for todo in todos %}
+                <li class="taskItem">
+                    <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ todo.id }}" value="{{ todo.id }}">
+                    <label for="{{ todo.id }}"><span class="complete-">Title:{{ todo.title }}</span></label><br>
+                    <span class="complete-{{ todo.description }}">Description:{{ todo.description }}</span>
+                    <strong class="taskDate"><i class="fa fa-calendar"></i>ToDo List Date & Time:{{ todo.todo_task_dates_times }}</strong>
+                    <span class="complete-{{ todo.status }}">Status:{{ todo.status }}</span>
+                    <strong class="taskDate"><i class="fa fa-calendar"></i>Created_at:{{ todo.created_at }}</strong>
+                    <strong class="taskDate"><i class="fa fa-calendar"></i>Modified_at:{{ todo.modified_at }}</strong>
+                </li>
+            {% endfor %}
+            </ul>
+            </form>
+            </div>
+ </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
